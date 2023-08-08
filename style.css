@@ -113,11 +113,11 @@
   @media screen and (max-width: 530px) {
 
     h1{
-      font-size: 25px;
+      font-size: 25cdpx;
     }
     .wrapper{
-      height: 450px;
-      width: 450px;
+      height: 350px;
+      width: 350px;
     }
 
     
