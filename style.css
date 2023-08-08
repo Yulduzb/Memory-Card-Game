@@ -110,15 +110,18 @@
 
 
 
-  @media screen and (max-width: 530px) {
+  @media screen and (max-width: 600px) {
 
     h1{
-      font-size: 25cdpx;
+      font-size: 25px;
     }
     .wrapper{
-      height: 350px;
-      width: 350px;
+      height: 300px;
+      width: 300px;
+      
     }
+
+    
 
     
     
