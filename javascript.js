@@ -1,18 +1,46 @@
-const cards=document.querySelectorAll(".card");
+const cards=document.querySelectorAll(".card"),
+timeText=document.querySelector(".time b");
 
 let matchedCard=0;
-let cardOne,cardTwo;
+let cardOne,cardTwo,timer;
 let disableDesk=false;
 
 
+/*zaman
+const initTimer = maxTime => {
+    timer=setInterval(() => {
+    if(maxTime>0){
+        maxTime--;
+        timeText.innerText = maxTime;
+
+    }
+    else{
+        clearInterval(timer);
+       alert("Maalesef, zamanınız doldu. Devam etmek istiyor musunuz?");
+            shuffleCard();
+            initTimer(60);
+        }
+       
+        
+    }, 1000);
+}*/
+
+
+//kart tıklandığında
 function flipCard({target:clickCard}){
- if(cardOne !== clickCard  &&  !disableDesk){
-    clickCard.classList.add("flip");
+  
+ if(cardOne !== clickCard  &&  !disableDesk){     // İlk kart ile tıklanan kart aynı değil ve masa devre dışı değilse
+    clickCard.classList.add("flip");             // Tıklanan kartı çevir
+                 
+     // Eğer cardOne boşsa (ilk kart çevrilmediyse)
+     // cardOne'a tıklanan kartı ata
     if(!cardOne){
         return cardOne=clickCard;
     }
-    cardTwo=clickCard;
-    disableDesk=true;
+   
+    cardTwo=clickCard;                      // cardTwo'ya tıklanan kartı ata
+    disableDesk=true;                      // Kartlar kontrol edilirken masa devre dışı bırakılır
+                          
     let cardOneImg=cardOne.querySelector(".back-view img").src;
     let cardTwoImg=cardTwo.querySelector(".back-view img").src;
     matchCard(cardOneImg,cardTwoImg);
@@ -21,14 +49,23 @@ function flipCard({target:clickCard}){
   
 }
 
+//kartları karşılaştirmasi
 function matchCard(img1, img2){
+ //  clearInterval(timer); 
    if(img1 === img2){
     matchedCard++;
 
     if(matchedCard == 8){
-        setTimeout(() => {
-            return  shuffleCard();
-        }, 1000)
+        clearInterval(timer);
+        performConfettiAndPlayMusic();// Kazanma durumunda confetti ve müzik çal
+            setTimeout(() => {
+               // initTimer(60); // Zamanlayıcıyı tekrar başlat
+                shuffleCard();
+               
+    
+            }, 1000)
+       
+       
       
     }
     cardOne.removeEventListener("click", flipCard);
@@ -52,9 +89,24 @@ function matchCard(img1, img2){
 }
 
 
+//kazanma durumunda
+function performConfettiAndPlayMusic() {
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+
+    const music = document.getElementById('music');
+    music.play();
+}
 
 
+
+
+//kartlar kariştirilir
 function shuffleCard() {
+   // initTimer(60);
     matchCards=0;
     disableDesk=false;
     cardOne=cardTwo="";
@@ -70,6 +122,8 @@ function shuffleCard() {
 
 shuffleCard();
 
+
+// her bir kart için click özelliği atanir ve flip card fonksiyonu çalişir
 cards.forEach(card=> {
     card.addEventListener("click",flipCard);
 });
