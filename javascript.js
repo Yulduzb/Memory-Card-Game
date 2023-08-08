@@ -3,10 +3,11 @@ timeText=document.querySelector(".time b");
 
 let matchedCard=0;
 let cardOne,cardTwo,timer;
-let disableDesk=false;
+let disableDesk=false,
+startGame=false;
 
 
-/*zaman
+/*zaman*/  //!Timerda sorun var alert yerine pop-up yapılabilir
 const initTimer = maxTime => {
     timer=setInterval(() => {
     if(maxTime>0){
@@ -23,7 +24,7 @@ const initTimer = maxTime => {
        
         
     }, 1000);
-}*/
+}
 
 
 //kart tıklandığında
@@ -38,8 +39,8 @@ function flipCard({target:clickCard}){
         return cardOne=clickCard;
     }
    
-    cardTwo=clickCard;                      // cardTwo'ya tıklanan kartı ata
-    disableDesk=true;                      // Kartlar kontrol edilirken masa devre dışı bırakılır
+    cardTwo=clickCard;       
+    disableDesk=true;                     
                           
     let cardOneImg=cardOne.querySelector(".back-view img").src;
     let cardTwoImg=cardTwo.querySelector(".back-view img").src;
@@ -51,7 +52,7 @@ function flipCard({target:clickCard}){
 
 //kartları karşılaştirmasi
 function matchCard(img1, img2){
- //  clearInterval(timer); 
+   
    if(img1 === img2){
     matchedCard++;
 
@@ -59,11 +60,12 @@ function matchCard(img1, img2){
         clearInterval(timer);
         performConfettiAndPlayMusic();// Kazanma durumunda confetti ve müzik çal
             setTimeout(() => {
-               // initTimer(60); // Zamanlayıcıyı tekrar başlat
                 shuffleCard();
+                initTimer(60); // Zamanlayıcıyı tekrar başlat
+              
                
     
-            }, 1000)
+            }, 1500)
        
        
       
@@ -106,8 +108,8 @@ function performConfettiAndPlayMusic() {
 
 //kartlar kariştirilir
 function shuffleCard() {
-   // initTimer(60);
-    matchCards=0;
+    initTimer(60);
+    matchedCard=0;
     disableDesk=false;
     cardOne=cardTwo="";
     let arr = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8];    //Bu satır, "arr" adlı bir dizi oluşturur ve içine 16 adet sayı ekler. 

@@ -107,7 +107,21 @@
     transform: rotateY(0);
   }
 
+.time{
+  background: #f4f4e3;
+  margin-top: 20px;
+  padding: 10px 40px 10px 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color:#7643ed;
+  border-radius: 10px;
 
+}
+
+b{
+  color:#7643ed;
+  font-weight: 600;
+}
 
 
   @media screen and (max-width: 600px) {
